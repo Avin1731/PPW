@@ -1,0 +1,620 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #002b20; /* Warna background utama */
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url("../image/bg.jpg");
+    background-size: cover; /* Pastikan gambar menutupi seluruh area */
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw; /* Lebar penuh */
+    height: 100vh; /* Tinggi penuh */
+    margin: 0; /* Hilangkan margin */
+    padding: 0; /* Hilangkan padding */
+    overflow: hidden; /* Cegah elemen lain keluar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* Header */
+.header__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 50px 10px 15px;
+    margin-top: 30px;
+    background: rgba(0, 50, 0, 0.8); /* Warna hijau gelap transparan */
+}
+
+.header__logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.header__company-name {
+    font-family: 'La Belle Aurore', cursive;
+    font-size: 25px;
+    font-weight: bold;
+    color: #a8ff78;
+    margin-left: 10px;
+}
+.header__logo {
+    height: 50px;
+    font-size: 24px;
+    color: #a8ff78;
+    font-family: 'Brush Script MT', cursive; /* Font dekoratif */
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.header__nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: center; /* Memastikan menu rata tengah */
+    align-items: center;
+    gap: 15px;
+    margin: 0;
+    padding-right: 25;
+}
+
+.header__nav-item a {
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #6FB98F;
+    font-size: 12px;
+    padding: 8px 15px;
+    background: rgba(0, 50, 0, 0.9);
+    border-radius: 5px;
+    transition: 0.3s;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.header__nav-item a:hover {
+    background: #ff8000;
+    color: #004d00;
+}
+
+/* Hero Content */
+.hero__content {
+    max-width: 700px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero__title {
+    font-family: 'Paprika', cursive;
+    font-size: 50px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+    margin-bottom: 10px;
+}
+
+.hero__description {
+    font-family: 'Lacquer', cursive;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+    color: #a8ff78;
+}
+
+/* Button */
+.hero__button {
+    display: inline-block;
+    background: transparent;
+    color: #7fff85;
+    padding: 10px 20px;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Brush Script MT', cursive;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+    transition: 0.3s;
+}
+
+.hero__button:hover {
+    color: #ff8000;
+    border-radius: 4px;
+}
+
+/* Rating */
+.rating {
+    gap: 10px;
+    font-size: 18px;
+    color: #333;
+    position: absolute;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 50px 10px 15px;
+    background: rgb(0, 50, 0); /* Warna hijau gelap transparan */
+}
+
+.rating__container{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Bisa diubah sesuai kebutuhan */
+    width: 100%;
+    padding: 5px;
+}
+
+.rating__value {
+    font-weight: bold;
+    color: #777;
+}
+
+.rating__stars {
+    display: flex;
+    gap: 5px;
+    font-size: 24px;
+    color: gold;
+    padding: 0 15px;
+}
+
+.rating__star {
+    color: gold;
+}
+
+.rating__star--half {
+    color: gold;
+}
+
+.rating__reviews {
+    font-size: 16px;
+    color: #777;
+}
+/* Section About */
+.about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #6FB98F;
+}
+
+/* Background mirip Features */
+.about__bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    padding: 20px 30px;
+    background-color: #004603;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 70px;
+}
+
+/* Judul About */
+.about__title {
+    font-size: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Paprika', cursive;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.about__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+}
+
+.about__content {
+    flex: 1;
+    max-width: 45%;
+    background-color: #85b70e;
+    padding: 20px;
+    border-radius: 10px;
+    color: #3D2B1F;
+    text-shadow: 2px 2px 5px rgba(0, 85, 255, 0.7); /* Efek glow biru */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.about__text {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.about__video {
+    flex: 1;
+    max-width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about__video iframe {
+    width: 100%;
+    height: 260px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Section Features */
+.features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #6FB98F;
+    font-size: 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.features__bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    padding: 20px 30px;
+    background-color: #004603;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 120px;
+}
+
+.features__title {
+    font-size: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Paprika', cursive;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.features__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+}
+
+.features__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #85b70e;
+    padding: 15px;
+    border-radius: 10px;
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+}
+
+.features__item:hover {
+    transform: scale(1.05);
+    background-color: #b7b40e;
+    color: #077b07;
+}
+
+.features__icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: #7fff85;
+    border-radius: 100%;
+}
+
+.features__subtitle {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Paprika', cursive;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.features__text {
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #a8ff78;
+}
+
+/* Section Testimonials */
+.testimonials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #6FB98F;
+    font-size: 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-top: 125px;
+    padding-top: 20px;
+}
+
+.testimonials__bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    padding: 20px;
+    background-color: #004603;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px 30px;
+}
+
+.testimonials__title {
+    font-size: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Paprika', cursive;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.testimonials__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+}
+
+.testimonials__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #85b70e;
+    padding: 15px;
+    border-radius: 10px;
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+}
+
+.testimonials__item:hover {
+    transform: scale(1.05);
+    background-color: #b7b40e;
+    color: #077b07;
+}
+
+.testimonials__image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: #7fff85;
+    border-radius: 100%;
+}
+
+.testimonials__name {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Paprika', cursive;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.testimonials__text {
+    font-family: 'Paprika', cursive;
+    text-decoration: none;
+    font-weight: bold;
+    color: #a8ff78;
+}
+
+/* Section QnA */
+.qna {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Paprika', cursive;
+    color: #6FB98F;
+    margin-top: 50px;
+    padding-top: 50px;
+}
+
+.qna__bg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    padding: 30px;
+    background-color: #004603; /* Hijau tua */
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Section Pertanyaan */
+.qna__container {
+    flex: 2;
+    width: 100%;
+    text-align: left;
+}
+
+.qna__title {
+    font-size: 35px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.qna__item {
+    background-color: #85b70e;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+.qna__item:hover {
+    transform: scale(1.05);
+    background-color: #b7b40e;
+    color: #077b07;
+}
+
+.qna__question {
+    font-weight: bold;
+    font-size: 18px;
+    color: #3D2B1F;
+}
+
+.qna__answer {
+    font-size: 16px;
+    color: #004d00;
+}
+
+/* Extra Info */
+.qna__extra {
+    flex: 1;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.qna__extra-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #a8ff78;
+    text-shadow: 2px 2px 5px rgb(240, 174, 41);
+}
+
+.qna__extra-description {
+    font-size: 12px;
+    color: #E3B505; /* Emas tua yang lebih halus */
+    text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.6);
+    margin-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.qna__button {
+    background-color: #6FB98F;
+    color: #002d02;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.qna__button:hover {
+    background-color: #a8ff78;
+    color: #002d02;
+}
+
+/* Footer */
+.footer {
+    background-color: #2c3e50; /* Warna gelap */
+    color: #ecf0f1; /* Warna teks */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: left;
+    margin-top: 85px;
+    font-size: 0.875rem;
+}
+
+.footer__about,
+.footer__contact,
+.footer__legal {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px;
+}
+
+.footer__title {
+    font-size: 1.125rem;
+    margin-bottom: 8px;
+    color: #e1b60f;
+}
+
+.footer__text {
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    color: #d3d6db;
+}
+
+.footer__text a {
+    color: #f39c12;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer__text a:hover {
+    color: #e67e22;
+}
+
+/* Penyesuaian ikon dengan teks dalam satu baris */
+.footer__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Jarak antara ikon dan teks */
+    margin-bottom: 8=6px;
+}
+
+.footer__icon {
+    font-size: 1rem;
+    color: #f39c12; /* Warna emas */
+}
