@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+}
+body{
+    background-color: royalblue;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(26, 0, 65);
+    padding: 10px 15px;
+    color: white;
+}
+.header__nav{
+    padding: 5px;
+}
+.header__ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 25px;
+    color: white;
+}
+.header__li{
+    color: black;
+    font-size:larger;
+    padding: 5px;
+    background-color: royalblue;
+}
+.header__li-active{
+    color: green;
+}
+.hero{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.grid{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.card{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    background-color: aquamarine;
+}
+.bg{
+    flex: 1;
+    width: 90vw;  /* Lebar mengikuti parent */
+    height: auto; /* Tinggi mengikuti aspek rasio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+/* Untuk layar dengan lebar maksimum 768px (Tablet) */
+@media (max-width: 768px) {
+    * {
+        font-size: 25px;
+    }
+
+    body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+        width: 100vw;
+    }
+
+    .header__ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 85vw; /* Ukuran lebih kecil untuk tablet */
+    }
+
+    .bg {
+        width: 85vw;  /* Lebar mengikuti parent */
+        height: auto; /* Tinggi mengikuti aspek rasio */
+    }
+}
+
+/* Untuk layar dengan lebar maksimum 425px (Mobile) */
+@media (max-width: 425px) {
+    * {
+        font-size: 15px;
+    }
+
+    body {
+        background-color: lightblue; /* Ubah warna agar lebih soft di mobile */
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .header__ul {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .header__li {
+        font-size: medium;
+        padding: 8px;
+        background-color: lightblue;
+    }
+
+    .grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .card {
+        width: 100vw; /* Full width untuk mobile */
+    }
+
+    .bg {
+        width: 100vw;
+        padding-bottom: 10px;
+    }
+}
