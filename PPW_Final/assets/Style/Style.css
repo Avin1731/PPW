@@ -755,18 +755,18 @@ body {
 }
 @media (max-width: 360px){
     .about{
-    margin-top: 125px;
+    margin-top: 65px;
     }
     .features,.features__bg{
-    margin-top: 90px;
+    margin-top: 45px;
     }
     .testimonials{
-    margin-top: 170px;
+    margin-top: 85px;
     }
     .qna{
-    margin-top: 225px;
+    margin-top: 115px;
     }
     .footer{
-    margin-top: 190px;
+    margin-top: 95px;
     }
 }
