@@ -36,14 +36,14 @@ body {
 
 /* Header */
 .header__container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 50px 10px 15px;
+    padding: 10px 0px 10px 0px;
     margin-top: 30px;
     background: rgba(0, 50, 0, 0.8); /* Warna hijau gelap transparan */
 }
@@ -180,7 +180,7 @@ body {
     position: absolute;
     width: 100%;
     justify-content: space-between;
-    padding: 10px 50px 10px 15px;
+    padding: 10px 0px 10px 0px;
     background: rgb(0, 50, 0); /* Warna hijau gelap transparan */
 }
 
@@ -648,7 +648,7 @@ body {
 }
 
 /* Untuk layar dengan lebar maksimum 768px (Tablet) */
-@media screen and (max-width: 1024px){
+@media (max-width: 1024px){
     .about{
     margin-top: 80px;
     }
@@ -665,7 +665,7 @@ body {
     margin-top: 150px;
     }
 }
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
    .about{
     margin-top: 20px;
    }
@@ -693,7 +693,7 @@ body {
 }
 
 /* Untuk layar dengan lebar maksimum 425px (Mobile) */
-@media screen and (max-width: 425px) {
+@media (max-width: 425px) {
     .header__container{
         display: flex;
         flex-direction: column;
@@ -753,7 +753,7 @@ body {
         max-width: 100%;
     }
 }
-@media screen and (max-width: 360px){
+@media (max-width: 360px){
     .about{
     margin-top: 65px;
     }
