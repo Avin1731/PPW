@@ -753,7 +753,7 @@ body {
         max-width: 100%;
     }
 }
-@media (max-width: 360px){
+/* @media (max-width: 360px){
     .about{
     margin-top: 65px;
     }
@@ -769,4 +769,4 @@ body {
     .footer{
     margin-top: 95px;
     }
-}
+} */
