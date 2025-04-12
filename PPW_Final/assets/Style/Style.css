@@ -648,7 +648,7 @@ body {
 }
 
 /* Untuk layar dengan lebar maksimum 768px (Tablet) */
-@media (max-width: 1024px){
+@media screen and (max-width: 1024px){
     .about{
     margin-top: 80px;
     }
@@ -665,7 +665,7 @@ body {
     margin-top: 150px;
     }
 }
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
    .about{
     margin-top: 20px;
    }
@@ -693,7 +693,7 @@ body {
 }
 
 /* Untuk layar dengan lebar maksimum 425px (Mobile) */
-@media (max-width: 425px) {
+@media screen and (max-width: 425px) {
     .header__container{
         display: flex;
         flex-direction: column;
@@ -753,7 +753,7 @@ body {
         max-width: 100%;
     }
 }
-/* @media (max-width: 360px){
+@media screen and (max-width: 360px){
     .about{
     margin-top: 65px;
     }
@@ -769,4 +769,4 @@ body {
     .footer{
     margin-top: 95px;
     }
-} */
+}
