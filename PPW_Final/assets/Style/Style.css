@@ -647,19 +647,18 @@ body {
     color: #f39c12; /* Warna emas */
 }
 
-/* Untuk layar dengan lebar maksimum 768px (Tablet) */
 @media (max-width: 1024px){
     .about{
-    margin-top: 80px;
+    margin-top: 60px;
     }
     .features,.features__bg{
-    margin-top: 80px;
+    margin-top: 55px;
     }
     .testimonials{
-    margin-top: 235px;
+    margin-top: 185px;
     }
     .qna{
-    margin-top: 215px;
+    margin-top: 190px;
     }
     .footer{
     margin-top: 150px;
