@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Components Demo - Anime/Manga System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 120px;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'SQL';
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 10px;
+            color: #718096;
+            background: #4a5568;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .explanation {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4299e1;
+        }
+
+        .explanation h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+        }
+
+        .explanation li {
+            margin: 5px 0;
+            color: #4a5568;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-box {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .table-demo {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .demo-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .demo-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #ffd89b, #19547b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                min-width: auto;
+                flex: 1 1 calc(50% - 5px);
+                margin: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎌 Database Components Demo</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 1.1em;">
+            Sistem Database Anime & Manga - Demonstrasi Query Kompleks, View, Function, Procedure & Trigger
+        </p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('queries')">📊 Query Kompleks</button>
+            <button class="tab" onclick="showTab('views')">👁️ Views</button>
+            <button class="tab" onclick="showTab('functions')">⚙️ Functions</button>
+            <button class="tab" onclick="showTab('procedures')">🔧 Procedures</button>
+            <button class="tab" onclick="showTab('triggers')">⚡ Triggers</button>
+        </div>
+
+        <!-- Query Kompleks -->
+        <div id="queries" class="content active">
+            <div class="section">
+                <h3><span class="icon">📊</span>Query 1: User Favorites dengan Detail Anime & Manga</h3>
+                <div class="code-block">SELECT u.username, 
+       a.title AS anime_title, 
+       m.title AS manga_title,
+       COALESCE(ufa.created_at, ufm.created_at) AS favorited_at
+FROM users u
+LEFT JOIN user_favorite_anime ufa ON u.id = ufa.user_id
+LEFT JOIN anime a ON ufa.anime_id = a.id
+LEFT JOIN user_favorite_manga ufm ON u.id = ufm.user_id
+LEFT JOIN manga m ON ufm.manga_id = m.id
+WHERE u.id = 1
+ORDER BY favorited_at DESC;</div>
+
+                <button class="demo-button" onclick="showQueryResult('query1')">🔍 Jalankan Query</button>
+
+                <div id="query1-result" class="result-box">
+                    <h4>📋 Hasil Query:</h4>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Anime Title</th>
+                                    <th>Manga Title</th>
+                                    <th>Favorited At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>Attack on Titan</td>
+                                    <td>NULL</td>
+                                    <td>2024-01-15 10:30:00</td>
+                                </tr>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>NULL</td>
+                                    <td>One Piece</td>
+                                    <td>2024-01-10 14:20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>Demon Slayer</td>
+                                    <td>NULL</td>
+                                    <td>2024-01-05 09:15:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Query:</h4>
+                    <ul>
+                        <li><strong>Menggabungkan 4 tabel:</strong> users, user_favorite_anime, anime, user_favorite_manga, manga</li>
+                        <li><strong>Menggunakan LEFT JOIN:</strong> Untuk menampilkan semua favorit user (anime & manga)</li>
+                        <li><strong>COALESCE:</strong> Menggabungkan tanggal favorit dari anime atau manga</li>
+                        <li><strong>Fungsi:</strong> Menampilkan daftar lengkap favorit user dengan detail</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3><span class="icon">📈</span>Query 2: Genre Popularity dengan Hitungan Anime & Manga</h3>
+                <div class="code-block">SELECT g.name AS genre_name,
+       COUNT(DISTINCT ag.anime_id) AS anime_count,
+       COUNT(DISTINCT mg.manga_id) AS manga_count
+FROM genres g
+LEFT JOIN anime_genres ag ON g.id = ag.genre_id
+LEFT JOIN manga_genres mg ON g.id = mg.genre_id
+GROUP BY g.name
+HAVING COUNT(DISTINCT ag.anime_id) > 0 OR COUNT(DISTINCT mg.manga_id) > 0
+ORDER BY g.name;</div>
+
+                <button class="demo-button" onclick="showQueryResult('query2')">🔍 Jalankan Query</button>
+
+                <div id="query2-result" class="result-box">
+                    <h4>📋 Hasil Query:</h4>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Genre Name</th>
+                                    <th>Anime Count</th>
+                                    <th>Manga Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Action <span class="badge">Popular</span></td>
+                                    <td>15</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <td>Adventure</td>
+                                    <td>8</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>Romance</td>
+                                    <td>6</td>
+                                    <td>14</td>
+                                </tr>
+                                <tr>
+                                    <td>Supernatural</td>
+                                    <td>11</td>
+                                    <td>7</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Query:</h4>
+                    <ul>
+                        <li><strong>Menggabungkan 3 tabel:</strong> genres, anime_genres, manga_genres</li>
+                        <li><strong>GROUP BY & HAVING:</strong> Mengelompokkan dan filter genre yang memiliki konten</li>
+                        <li><strong>COUNT DISTINCT:</strong> Menghitung jumlah unik anime/manga per genre</li>
+                        <li><strong>Fungsi:</strong> Analisis popularitas genre di seluruh platform</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Views -->
+        <div id="views" class="content">
+            <div class="section">
+                <h3><span class="icon">👁️</span>View 1: UserFavoritesView</h3>
+                <div class="code-block">CREATE OR REPLACE VIEW UserFavoritesView AS
+SELECT u.username, 
+       a.title AS anime_title, 
+       m.title AS manga_title,
+       c.name AS character_name,
+       CASE 
+           WHEN ufa.anime_id IS NOT NULL THEN 'anime'
+           WHEN ufm.manga_id IS NOT NULL THEN 'manga'
+           WHEN ufc.character_id IS NOT NULL THEN 'character'
+       END AS favorite_type,
+       COALESCE(ufa.created_at, ufm.created_at, ufc.created_at) AS favorited_at
+FROM users u
+LEFT JOIN user_favorite_anime ufa ON u.id = ufa.user_id
+LEFT JOIN anime a ON ufa.anime_id = a.id
+LEFT JOIN user_favorite_manga ufm ON u.id = ufm.user_id
+LEFT JOIN manga m ON ufm.manga_id = m.id
+LEFT JOIN user_favorite_characters ufc ON u.id = ufc.user_id
+LEFT JOIN characters c ON ufc.character_id = c.id
+WHERE ufa.anime_id IS NOT NULL OR ufm.manga_id IS NOT NULL OR ufc.character_id IS NOT NULL
+ORDER BY favorited_at DESC;</div>
+
+                <button class="demo-button" onclick="showViewResult('view1')">👀 Test View</button>
+
+                <div id="view1-result" class="result-box">
+                    <div class="code-block" style="background: #2a4365; margin-bottom: 15px;">SELECT * FROM UserFavoritesView WHERE username = 'adminmagang';</div>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Content</th>
+                                    <th>Type</th>
+                                    <th>Favorited At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>Attack on Titan</td>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>2024-01-15 10:30:00</td>
+                                </tr>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>Levi Ackerman</td>
+                                    <td><span class="badge">character</span></td>
+                                    <td>2024-01-12 16:45:00</td>
+                                </tr>
+                                <tr>
+                                    <td>adminmagang</td>
+                                    <td>One Piece</td>
+                                    <td><span class="badge">manga</span></td>
+                                    <td>2024-01-10 14:20:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Fungsi View:</h4>
+                    <ul>
+                        <li><strong>Abstraksi Kompleksitas:</strong> Menyederhanakan query join yang rumit</li>
+                        <li><strong>Konsistensi Data:</strong> Memastikan format data favorit yang seragam</li>
+                        <li><strong>Keamanan:</strong> Membatasi akses hanya pada kolom yang diperlukan</li>
+                        <li><strong>Reusability:</strong> Dapat digunakan berulang untuk berbagai keperluan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3><span class="icon">📊</span>View 2: AnimeMangaPopularityView</h3>
+                <div class="code-block">CREATE OR REPLACE VIEW AnimeMangaPopularityView AS
+SELECT 'anime' AS content_type, a.id, a.title, a.popularity,
+       COUNT(uar.rating) AS rating_count, 
+       AVG(uar.rating) AS avg_rating
+FROM anime a
+LEFT JOIN user_anime_ratings uar ON a.id = uar.anime_id
+GROUP BY a.id, a.title, a.popularity
+UNION
+SELECT 'manga' AS content_type, m.id, m.title, m.popularity,
+       COUNT(umr.rating) AS rating_count, 
+       AVG(umr.rating) AS avg_rating
+FROM manga m
+LEFT JOIN user_manga_ratings umr ON m.id = umr.manga_id
+GROUP BY m.id, m.title, m.popularity
+ORDER BY popularity DESC, avg_rating DESC;</div>
+
+                <button class="demo-button" onclick="showViewResult('view2')">👀 Test View</button>
+
+                <div id="view2-result" class="result-box">
+                    <div class="code-block" style="background: #2a4365; margin-bottom: 15px;">SELECT * FROM AnimeMangaPopularityView WHERE content_type = 'anime';</div>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Title</th>
+                                    <th>Popularity</th>
+                                    <th>Rating Count</th>
+                                    <th>Avg Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>Attack on Titan</td>
+                                    <td>95</td>
+                                    <td>1247</td>
+                                    <td>9.2</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>Demon Slayer</td>
+                                    <td>92</td>
+                                    <td>1156</td>
+                                    <td>8.9</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>Your Name</td>
+                                    <td>89</td>
+                                    <td>934</td>
+                                    <td>8.7</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Fungsi View:</h4>
+                    <ul>
+                        <li><strong>Unifikasi Data:</strong> Menggabungkan data anime dan manga dalam satu view</li>
+                        <li><strong>Analisis Popularitas:</strong> Memudahkan analisis konten terpopuler</li>
+                        <li><strong>Agregasi Otomatis:</strong> Menghitung rating dan popularitas secara real-time</li>
+                        <li><strong>Dashboard Ready:</strong> Siap digunakan untuk dashboard analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Functions -->
+        <div id="functions" class="content">
+            <div class="section">
+                <h3><span class="icon">⚙️</span>Function 1: GetAverageRating</h3>
+                <div class="code-block">CREATE OR REPLACE FUNCTION GetAverageRating(
+    p_content_type VARCHAR2, 
+    p_content_id NUMBER
+) RETURN NUMBER IS 
+    v_avg_rating NUMBER;
+BEGIN
+    IF p_content_type = 'anime' THEN
+        SELECT AVG(rating) INTO v_avg_rating
+        FROM user_anime_ratings WHERE anime_id = p_content_id;
+    ELSIF p_content_type = 'manga' THEN
+        SELECT AVG(rating) INTO v_avg_rating
+        FROM user_manga_ratings WHERE manga_id = p_content_id;
+    ELSE
+        RAISE_APPLICATION_ERROR(-20001, 'Invalid content type');
+    END IF;
+    
+    IF v_avg_rating IS NULL THEN
+        RETURN 0;
+    END IF;
+    
+    RETURN ROUND(v_avg_rating, 1);
+EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RETURN 0;
+END;</div>
+
+                <button class="demo-button" onclick="showProcedureResult('proc1')">🔧 Test Procedure</button>
+
+                <div id="proc1-result" class="result-box">
+                    <div class="code-block" style="background: #2a4365; margin-bottom: 15px;">EXEC AddUserFavorite(1, 'anime', 5);</div>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>User ID</th>
+                                    <th>Type</th>
+                                    <th>Content ID</th>
+                                    <th>Status</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Add Favorite</td>
+                                    <td>1</td>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>5</td>
+                                    <td>✅ Success</td>
+                                    <td>Favorite added successfully</td>
+                                </tr>
+                                <tr>
+                                    <td>Add Favorite</td>
+                                    <td>1</td>
+                                    <td><span class="badge">manga</span></td>
+                                    <td>3</td>
+                                    <td>✅ Success</td>
+                                    <td>Favorite added successfully</td>
+                                </tr>
+                                <tr>
+                                    <td>Add Favorite</td>
+                                    <td>1</td>
+                                    <td><span class="badge">anime</span></td>
+                                    <td>5</td>
+                                    <td>⚠️ Skipped</td>
+                                    <td>Already in favorites</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Procedure:</h4>
+                    <ul>
+                        <li><strong>Input Parameters:</strong> user_id, favorite_type, favorite_id</li>
+                        <li><strong>Validasi:</strong> Memastikan favorite_type valid ('anime', 'manga', 'character')</li>
+                        <li><strong>Duplikasi Check:</strong> Mencegah penambahan favorit yang sudah ada</li>
+                        <li><strong>Transaction Safety:</strong> Menggunakan COMMIT/ROLLBACK untuk konsistensi data</li>
+                        <li><strong>Error Handling:</strong> Menangani berbagai jenis error dengan pesan yang jelas</li>
+                    </ul>
+                </div>
+
+                <div class="explanation">
+                    <h4>🔄 Kapan Digunakan:</h4>
+                    <ul>
+                        <li><strong>User Interface:</strong> Ketika user menambah item ke daftar favorit</li>
+                        <li><strong>Batch Operations:</strong> Import favorit dalam jumlah besar</li>
+                        <li><strong>API Calls:</strong> Endpoint untuk menambah favorit dari aplikasi mobile</li>
+                        <li><strong>Admin Panel:</strong> Moderasi dan pengelolaan favorit user</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Triggers -->
+        <div id="triggers" class="content">
+            <div class="section">
+                <h3><span class="icon">⚡</span>Trigger: after_anime_favorite_insert</h3>
+                <div class="code-block">CREATE OR REPLACE TRIGGER after_anime_favorite_insert
+AFTER INSERT ON user_favorite_anime
+FOR EACH ROW
+BEGIN
+    UPDATE anime 
+    SET popularity = popularity + 1 
+    WHERE id = :NEW.anime_id;
+END;</div>
+
+                <button class="demo-button" onclick="showTriggerResult('trigger1')">⚡ Test Trigger</button>
+
+                <div id="trigger1-result" class="result-box">
+                    <h4>🔄 Simulasi Trigger Execution:</h4>
+                    
+                    <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #0ea5e9;">
+                        <h5 style="color: #0c4a6e; margin-bottom: 10px;">📈 Before Insert:</h5>
+                        <div class="table-demo">
+                            <table class="demo-table" style="font-size: 12px;">
+                                <thead>
+                                    <tr>
+                                        <th>Anime ID</th>
+                                        <th>Title</th>
+                                        <th>Popularity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Attack on Titan</td>
+                                        <td>94</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="background: #fffbeb; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+                        <h5 style="color: #92400e; margin-bottom: 10px;">⚡ Trigger Event:</h5>
+                        <div class="code-block" style="font-size: 12px; margin: 0;">INSERT INTO user_favorite_anime (user_id, anime_id) VALUES (3, 1);</div>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #22c55e;">
+                        <h5 style="color: #166534; margin-bottom: 10px;">📈 After Insert (Automatic Update):</h5>
+                        <div class="table-demo">
+                            <table class="demo-table" style="font-size: 12px;">
+                                <thead>
+                                    <tr>
+                                        <th>Anime ID</th>
+                                        <th>Title</th>
+                                        <th>Popularity</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Attack on Titan</td>
+                                        <td><span class="highlight">95</span></td>
+                                        <td>+1 ⬆️</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Trigger:</h4>
+                    <ul>
+                        <li><strong>Triggering Event:</strong> AFTER INSERT pada tabel user_favorite_anime</li>
+                        <li><strong>Aksi:</strong> Otomatis menambah nilai popularity anime sebesar 1</li>
+                        <li><strong>Scope:</strong> FOR EACH ROW - dijalankan untuk setiap baris yang diinsert</li>
+                        <li><strong>Referensi:</strong> :NEW.anime_id mengacu pada anime yang baru ditambahkan ke favorit</li>
+                    </ul>
+                </div>
+
+                <div class="explanation">
+                    <h4>🎯 Manfaat Trigger:</h4>
+                    <ul>
+                        <li><strong>Real-time Updates:</strong> Popularity score langsung terupdate tanpa intervention manual</li>
+                        <li><strong>Data Consistency:</strong> Memastikan sinkronisasi antara favorit dan popularity</li>
+                        <li><strong>Performance:</strong> Menghindari query tambahan untuk update popularity</li>
+                        <li><strong>Transparency:</strong> Developer tidak perlu mengingat update popularity secara manual</li>
+                    </ul>
+                </div>
+
+                <div class="explanation">
+                    <h4>⚠️ Pertimbangan:</h4>
+                    <ul>
+                        <li><strong>Performance Impact:</strong> Trigger menambah overhead pada operasi INSERT</li>
+                        <li><strong>Debugging:</strong> Trigger berjalan otomatis, bisa menyulitkan debugging</li>
+                        <li><strong>Cascade Effects:</strong> Perubahan pada popularity bisa memicu trigger lain</li>
+                        <li><strong>Transaction Dependency:</strong> Jika trigger gagal, seluruh transaksi akan rollback</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3><span class="icon">📊</span>Ringkasan Implementasi</h3>
+                <div class="table-demo">
+                    <table class="demo-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Purpose</th>
+                                <th>Usage Context</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge">Query Kompleks</span></td>
+                                <td>Data retrieval & analysis</td>
+                                <td>Reports, dashboards</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge">Views</span></td>
+                                <td>Data abstraction</td>
+                                <td>Frequent queries, security</td>
+                                <td>Good</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge">Functions</span></td>
+                                <td>Reusable calculations</td>
+                                <td>Business logic, validations</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge">Procedures</span></td>
+                                <td>Complex operations</td>
+                                <td>Batch processing, workflows</td>
+                                <td>Good</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge">Triggers</span></td>
+                                <td>Automatic actions</td>
+                                <td>Data consistency, auditing</td>
+                                <td>Caution</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all content
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function showQueryResult(queryId) {
+            const resultBox = document.getElementById(queryId + '-result');
+            resultBox.classList.add('show');
+            
+            // Add some animation delay for better UX
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function showViewResult(viewId) {
+            const resultBox = document.getElementById(viewId + '-result');
+            resultBox.classList.add('show');
+            
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function showFunctionResult(funcId) {
+            const resultBox = document.getElementById(funcId + '-result');
+            resultBox.classList.add('show');
+            
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function showProcedureResult(procId) {
+            const resultBox = document.getElementById(procId + '-result');
+            resultBox.classList.add('show');
+            
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function showTriggerResult(triggerId) {
+            const resultBox = document.getElementById(triggerId + '-result');
+            resultBox.classList.add('show');
+            
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        // Add some interactive enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to code blocks
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                block.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                });
+                
+                block.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Add copy functionality to code blocks
+            codeBlocks.forEach(block => {
+                block.style.cursor = 'pointer';
+                block.title = 'Click to copy SQL code';
+                
+                block.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent);
+                    
+                    // Visual feedback
+                    const originalBg = this.style.background;
+                    this.style.background = '#22c55e';
+                    
+                    setTimeout(() => {
+                        this.style.background = originalBg;
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html></div>
+
+                <button class="demo-button" onclick="showFunctionResult('func1')">🧮 Test Function</button>
+
+                <div id="func1-result" class="result-box">
+                    <div class="code-block" style="background: #2a4365; margin-bottom: 15px;">SELECT GetAverageRating('anime', 1) AS anime_rating FROM dual;</div>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Content Type</th>
+                                    <th>Content ID</th>
+                                    <th>Average Rating</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>anime</td>
+                                    <td>1</td>
+                                    <td><span class="highlight">8.7</span></td>
+                                    <td>✅ Success</td>
+                                </tr>
+                                <tr>
+                                    <td>manga</td>
+                                    <td>2</td>
+                                    <td><span class="highlight">9.1</span></td>
+                                    <td>✅ Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Function:</h4>
+                    <ul>
+                        <li><strong>Input:</strong> content_type ('anime'/'manga'), content_id (NUMBER)</li>
+                        <li><strong>Output:</strong> Average rating (NUMBER, rounded to 1 decimal)</li>
+                        <li><strong>Kegunaan:</strong> Menghitung rata-rata rating untuk anime atau manga tertentu</li>
+                        <li><strong>Error Handling:</strong> Mengembalikan 0 jika tidak ada data atau tipe tidak valid</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3><span class="icon">🔢</span>Function 2: GetUserFavoriteCount</h3>
+                <div class="code-block">CREATE OR REPLACE FUNCTION GetUserFavoriteCount(
+    p_user_id NUMBER
+) RETURN NUMBER IS 
+    v_count NUMBER;
+BEGIN 
+    SELECT COUNT(*) INTO v_count
+    FROM (
+        SELECT anime_id FROM user_favorite_anime WHERE user_id = p_user_id
+        UNION
+        SELECT manga_id FROM user_favorite_manga WHERE user_id = p_user_id
+        UNION
+        SELECT character_id FROM user_favorite_characters WHERE user_id = p_user_id
+    );
+    
+    RETURN v_count;
+EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RETURN 0;
+END;</div>
+
+                <button class="demo-button" onclick="showFunctionResult('func2')">🧮 Test Function</button>
+
+                <div id="func2-result" class="result-box">
+                    <div class="code-block" style="background: #2a4365; margin-bottom: 15px;">SELECT GetUserFavoriteCount(1) AS total_favorites FROM dual;</div>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Total Favorites</th>
+                                    <th>Breakdown</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><span class="highlight">12</span></td>
+                                    <td>5 anime, 4 manga, 3 characters</td>
+                                    <td>✅ Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><span class="highlight">8</span></td>
+                                    <td>3 anime, 3 manga, 2 characters</td>
+                                    <td>✅ Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <h4>💡 Penjelasan Function:</h4>
+                    <ul>
+                        <li><strong>Input:</strong> user_id (NUMBER)</li>
+                        <li><strong>Output:</strong> Total count of all favorites (NUMBER)</li>
+                        <li><strong>Kegunaan:</strong> Menghitung total semua item favorit user (anime + manga + character)</li>
+                        <li><strong>Teknik:</strong> Menggunakan UNION untuk menggabungkan semua tabel favorit</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Procedures -->
+        <div id="procedures" class="content">
+            <div class="section">
+                <h3><span class="icon">🔧</span>Stored Procedure: AddUserFavorite</h3>
+                <div class="code-block">CREATE OR REPLACE PROCEDURE AddUserFavorite(
+    p_user_id IN NUMBER, 
+    p_favorite_type IN VARCHAR2, 
+    p_favorite_id IN NUMBER
+) AS 
+    v_exists NUMBER;
+BEGIN
+    -- Validate favorite_type
+    IF p_favorite_type NOT IN ('anime', 'manga', 'character') THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Invalid favorite type');
+    END IF;
+    
+    -- Check if favorite already exists and insert if not
+    IF p_favorite_type = 'anime' THEN 
+        SELECT COUNT(*) INTO v_exists FROM user_favorite_anime
+        WHERE user_id = p_user_id AND anime_id = p_favorite_id;
+        
+        IF v_exists = 0 THEN
+            INSERT INTO user_favorite_anime (id, user_id, anime_id, created_at)
+            VALUES (seq_user_favorite_anime.NEXTVAL, p_user_id, p_favorite_id, SYSTIMESTAMP);
+        END IF;
+        
+    ELSIF p_favorite_type = 'manga' THEN
+        SELECT COUNT(*) INTO v_exists FROM user_favorite_manga
+        WHERE user_id = p_user_id AND manga_id = p_favorite_id;
+        
+        IF v_exists = 0 THEN
+            INSERT INTO user_favorite_manga (id, user_id, manga_id, created_at)
+            VALUES (user_favorite_manga_seq.NEXTVAL, p_user_id, p_favorite_id, SYSTIMESTAMP);
+        END IF;
+        
+    ELSIF p_favorite_type = 'character' THEN
+        SELECT COUNT(*) INTO v_exists FROM user_favorite_characters
+        WHERE user_id = p_user_id AND character_id = p_favorite_id;
+        
+        IF v_exists = 0 THEN
+            INSERT INTO user_favorite_characters (id, user_id, character_id, created_at)
+            VALUES (seq_user_favorite_characters.NEXTVAL, p_user_id, p_favorite_id, SYSTIMESTAMP);
+        END IF;
+    END IF;
+    
+    COMMIT;
+EXCEPTION 
+    WHEN OTHERS THEN 
+        ROLLBACK;
+        RAISE_APPLICATION_ERROR(-20003, 'Error adding favorite: ' || SQLERRM);
+END;
+        
