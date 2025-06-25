@@ -1,0 +1,35 @@
+CREATE DATABASE crud1;
+
+USE crud1;
+
+
+CREATE TABLE `mahasiswa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nim` varchar(100) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `jurusan` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+//Edited
+-- Tambahkan kolom foto ke tabel mahasiswa
+ALTER TABLE mahasiswa ADD COLUMN foto VARCHAR(255) DEFAULT NULL;
+
+-- Buat tabel untuk sistem login
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert admin default (password: admin123)
+INSERT INTO users (username, email, password, full_name) 
+VALUES ('admin', 'admin@localhost.com', 
+        '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
+        'Administrator');
